@@ -1,0 +1,27 @@
+{
+  "name": "womt26-lektionsanteckningar",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/appelosc/womt26-lektionsanteckningar#readme",
+  "bugs": {
+    "url": "https://github.com/appelosc/womt26-lektionsanteckningar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appelosc/womt26-lektionsanteckningar.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
