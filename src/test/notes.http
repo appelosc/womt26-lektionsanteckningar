@@ -1,0 +1,24 @@
+GET http://localhost:8080/notes
+
+###
+
+POST http://localhost:8080/notes
+Content-Type: application/json
+
+{
+    "title": "Städa",
+    "content": "Städa toalett."
+}
+
+###
+
+PUT http://localhost:8080/notes/2
+Content-Type: application/json
+
+{
+    "title": "Äta",
+    "content": "Äta lunch."
+}
+###
+
+DELETE http://localhost:8080/notes/2
