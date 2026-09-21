@@ -1,4 +1,12 @@
-GET http://localhost:8080/notes
+#@API_URL={{$dotenv PRODUCTION_API}}
+
+@API_URL = http://localhost:8080
+
+GET {{API_URL}}/notes
+
+###
+
+GET {{API_URL}}/notes/4
 
 ###
 
@@ -6,8 +14,7 @@ POST http://localhost:8080/notes
 Content-Type: application/json
 
 {
-    "title": "Städa",
-    "content": "Städa toalett."
+    "note": "POST funkar!"
 }
 
 ###
@@ -16,8 +23,7 @@ PUT http://localhost:8080/notes/2
 Content-Type: application/json
 
 {
-    "title": "Äta",
-    "content": "Äta lunch."
+    "note": "konffa prisma"
 }
 ###
 

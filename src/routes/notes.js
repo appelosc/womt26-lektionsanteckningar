@@ -1,33 +1,62 @@
 const express = require('express')
 const router = express.Router()
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 
-//temporär db, ersätts senare med riktig databas
-const tempNotes = [
-    {   title: 'Hushåll', content: 'Diska' },
-    {  title: 'Skola', content: 'Göra klart ml-projekt' },
-    {  title: 'Köp', content: 'Köpa mjölk' }
-]
-
-router.get('/', (req, res) => {
-    res.send(tempNotes)
+router.get('/', async (req, res) => {
+    const notes = await prisma.notes.findMany({
+        orderBy: {created_at: 'desc'}
+    })
+    res.send(notes)
 })
 
-router.post('/', (req, res) => {
-    console.log('Inkommande note:', req.body)
-    tempNotes.push( req.body)
-    res.send('Note skapad', "id: " + tempNotes.length )
+router.get('/:id', async (req, res) => {
+    const {id} = req.params
+    const notes = await prisma.notes.findUnique({
+        where: {id: Number(id)}
+    })
+    res.send(notes)
 })
 
-router.put('/:id', (req, res) => {
-    console.log(`Updaterar note med id ${req.params.id}:`, req.body)
-    tempNotes[req.params.id] = req.body
-    res.send(`Note med id ${req.params.id} uppdaterad`)
+router.post('/',  async (req, res) => {
+    console.log(req.body)
+
+    const note = await prisma.notes.create({
+        data: { 
+            author_id: 1, 
+            note: req.body.note
+        }
+    })
+    
+    res.send({
+        msg: "Note created",
+        id: note.id
+    })
+    
 })
 
-router.delete('/:id', (req, res) => {
-   console.log(`Tar bort note med id ${req.params.id}`)
-    tempNotes.splice(req.params.id, 1)
-   res.send(`Note med id ${req.params.id} borttagen`)
+
+router.put('/:id', async (req, res) => {
+    const { note } = req.body;
+    const {id} = req.params
+    const updateNote = await prisma.notes.update({
+        where: {id: Number(id)},
+        data: {
+            note,
+            updated_at: new Date()
+        }
+    })
+    res.json(updateNote)
 })
+
+router.delete('/:id', async (req, res) => {
+   const {id} = req.params
+   const deleteNote = await prisma.notes.delete({
+    where: {id: Number(id)},
+   })
+   res.send("Note deleted")
+})
+   
 module.exports = router
