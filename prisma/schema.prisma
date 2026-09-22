@@ -13,4 +13,15 @@ model notes {
   note       String    @db.VarChar
   created_at DateTime? @default(now()) @db.Timestamp(6)
   updated_at DateTime? @default(now()) @db.Timestamp(6)
+  author     users     @relation(fields: [author_id], references: [id], onDelete: Cascade, map: "FK_notes_author_id")
+}
+
+model users {
+  id         Int       @id(map: "PK_users") @default(autoincrement())
+  name       String    @db.VarChar
+  email      String    @unique(map: "UQ_users_email") @db.VarChar
+  password   String    @db.VarChar
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  notes      notes[]
 }

@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const { PrismaClient } = require('@prisma/client')
+const authorize = require('../middleware/authorize')
 
 const prisma = new PrismaClient()
+
+router.use(authorize)
 
 
 router.get('/', async (req, res) => {
@@ -15,8 +18,12 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const {id} = req.params
     const notes = await prisma.notes.findUnique({
-        where: {id: Number(id)}
+        where: {id: Number(id), 
+        author_id: Number(req.authUser.sub)}
     })
+    if (!notes) {
+        return res.status(404).json({ message: "Note not found" })
+    }
     res.send(notes)
 })
 

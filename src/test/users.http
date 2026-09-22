@@ -1,0 +1,24 @@
+@API_URL = http://localhost:3001
+
+###
+
+POST {{API_URL}}/users
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john@doe.com",
+    "password": "123456"
+
+}
+
+###
+
+POST {{API_URL}}/users/login
+Content-Type: application/json
+
+{
+    "email": "john@doe.com",
+    "password": "123456"
+
+}

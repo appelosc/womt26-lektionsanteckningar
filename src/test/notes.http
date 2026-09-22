@@ -1,12 +1,15 @@
 #@API_URL={{$dotenv PRODUCTION_API}}
 
-@API_URL = http://localhost:8080
+@API_URL = http://localhost:3001
+
+@DEV_TOKEN = {{$dotenv DEV_TOKEN}}
 
 GET {{API_URL}}/notes
 
 ###
 
 GET {{API_URL}}/notes/4
+Authorization: Bearer {{DEV_TOKEN}}
 
 ###
 
